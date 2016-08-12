@@ -7,7 +7,6 @@ var app = express();
 
 port.on('open', function() {});
 
-// open errors will be emitted as an error event
 port.on('error', function(err) {
   console.log('Error: ', err.message);
 })
