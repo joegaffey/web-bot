@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <title>Blockly Robot Controller</title>
-  <script src="blockly_compressed.js"></script>
-  <script src="blocks_compressed.js"></script>
-  <script src="javascript_compressed.js"></script>
-  <script src="msg/js/en.js"></script>
+  <script src="./blockly_compressed.js"></script>
+  <script src="./blocks_compressed.js"></script>
+  <script src="./javascript_compressed.js"></script>
+  <script src="./msg/js/en.js"></script>
   <style>
     body {
       background-color: #fff;
@@ -94,6 +94,29 @@
      };
      testRobot.get_distance = function() {
        return Math.random() * 100;
+     };
+
+     var robot = {};
+     robot.left = function(time) {
+       //TBD
+     };
+     robot.right = function(time) {
+       //TBD
+     };
+     robot.forward = function(time) {
+       //TBD
+     };
+     robot.backward = function(time) {
+       //TBD
+     };
+     robot.stop = function(time) {
+       //TBD
+     };
+     robot.blink = function(time) {
+       //TBD
+     };
+     robot.get_distance = function() {
+       return Math.random() * 100; //TBD
      };
 
      var robot = testRobot;
@@ -238,7 +261,7 @@
   ////////////////// end blocks def ///////////////////////////
 
     var workspace = Blockly.inject('blocklyDiv',
-        {media: '../../media/',
+        {media: './media/',
          toolbox: document.getElementById('toolbox')});
     Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
                                workspace);
