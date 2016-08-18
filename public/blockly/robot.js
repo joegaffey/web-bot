@@ -29,9 +29,11 @@ robot.ledOn = function() {
 };
 
 robot.ledOff = function() {
-  fetch("/lid-off");
+  fetch("/led-off");
 };
 
 robot.get_distance = function() {
-  return Math.random() * 100; //TBD
+  fetch("/distance").then(function(response) {
+    return response.text();
+  });
 };
