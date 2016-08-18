@@ -33,7 +33,11 @@ robot.ledOff = function() {
 };
 
 robot.get_distance = function() {
+  var res = '';
   fetch("/distance").then(function(response) {
     return response.text();
+  }).then(function(text) {
+    res = text;
   });
+  return res;
 };
