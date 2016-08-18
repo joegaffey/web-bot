@@ -1,27 +1,27 @@
 var robot = {};
 
 robot.left = function(time) {
-  fetch("/left");
+  fetch("/left/" + time);
 };
 
 robot.right = function(time) {
-  fetch("/right");
+  fetch("/right/" + time);
 };
 
 robot.forward = function(time) {
-  fetch("/forward");
+  fetch("/forward/" + time);
 };
 
 robot.backward = function(time) {
-  fetch("/backward");
+  fetch("/backward/" + time);
 };
 
-robot.stop = function(time) {
+robot.stop = function() {
   fetch("/stop");
 };
 
 robot.blink = function(time) {
-  fetch("/blink");
+  fetch("/blink/" + time);
 };
 
 robot.get_distance = function() {

@@ -18,67 +18,59 @@ app.get('/events', sse, function(req, res) {
   //TBD
 });
 
-app.get('/forward', function(req, res) {
-  port.write('001#', function(err) {
+function writeMessage(msg) {
+  port.write(msg, function(err) {
     if (err) {
       return console.log('Error on write: ', err.message);
     }
-    console.log('message written');
+    console.log('Message written: ' + msg);
   });
-});
+}
 
 app.get('/stop', function(req, res) {
-  port.write('000#', function(err) {
-    if (err) {
-      return console.log('Error on write: ', err.message);
-    }
-    console.log('message written');
-  });
+  console.log('Request to stop');
+  var msg = '000#';
+  writeMessage(msg);
 });
 
-app.get('/back', function(req, res) {
-  port.write('002#', function(err) {
-    if (err) {
-      return console.log('Error on write: ', err.message);
-    }
-    console.log('message written');
-  });
+app.get('/forward/:time', function(req, res) {
+  var time = req.params.time;
+  console.log('Request to move forward for ' + time + 'ms');
+  var msg = '001#' + time + ";";
+  writeMessage(msg);
 });
 
-app.get('/right', function(req, res) {
-  port.write('003#', function(err) {
-    if (err) {
-      return console.log('Error on write: ', err.message);
-    }
-    console.log('message written');
-  });
+app.get('/back/:time', function(req, res) {
+  var time = req.params.time;
+  console.log('Request to move backward for ' + time + 'ms');
+  var msg = '002#' + time + ";";
+  writeMessage(msg);
 });
 
-app.get('/left', function(req, res) {
-  port.write('004#', function(err) {
-    if (err) {
-      return console.log('Error on write: ', err.message);
-    }
-    console.log('message written');
-  });
+app.get('/right/:time', function(req, res) {
+  var time = req.params.time;
+  console.log('Request to turn right for ' + time + 'ms');
+  var msg = '003#' + time + ";";
+  writeMessage(msg);
 });
 
-app.get('/blink', function(req, res) {
-  port.write('005#', function(err) {
-    if (err) {
-      return console.log('Error on write: ', err.message);
-    }
-    console.log('message written');
-  });
+app.get('/left/:time', function(req, res) {
+  var time = req.params.time;
+  console.log('Request to turn left for ' + time + 'ms');
+  var msg = '004#' + time + ";";
+  writeMessage(msg);
+});
+
+app.get('/blink/:time', function(req, res) {
+  var time = req.params.time;
+  console.log('Request to blink for ' + time + 'ms');
+  var msg = '005#' + time + ";";
+  writeMessage(msg);
 });
 
 app.get('/distance', function(req, res) {
-  port.write('006#', function(err) {
-    if (err) {
-      return console.log('Error on write: ', err.message);
-    }
-    console.log('message written');
-  });
+  var msg = '006#' + time + ";";
+  writeMessage(msg);
 });
 
 app.listen(8080);

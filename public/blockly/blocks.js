@@ -112,7 +112,7 @@ Blockly.Blocks['blink'] = {
 
 Blockly.JavaScript['blink'] = function(block) {
   var value_time = Blockly.JavaScript.valueToCode(block, 'time', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = robot.blink();
+  var code = 'robot.blink(' + value_time + ');\n';
   return code;
 };
 
