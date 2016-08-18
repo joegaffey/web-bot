@@ -1,5 +1,6 @@
+var portString = process.argv[2];
 var SerialPort = require('serialport');
-var port = new SerialPort('COM4');
+var port = new SerialPort(portString);
 
 var express = require('express');
 var sse = require('server-sent-events');
@@ -55,6 +56,24 @@ app.get('/right', function(req, res) {
 
 app.get('/left', function(req, res) {
   port.write('004#', function(err) {
+    if (err) {
+      return console.log('Error on write: ', err.message);
+    }
+    console.log('message written');
+  });
+});
+
+app.get('/blink', function(req, res) {
+  port.write('005#', function(err) {
+    if (err) {
+      return console.log('Error on write: ', err.message);
+    }
+    console.log('message written');
+  });
+});
+
+app.get('/distance', function(req, res) {
+  port.write('006#', function(err) {
     if (err) {
       return console.log('Error on write: ', err.message);
     }
