@@ -33,11 +33,15 @@ robot.ledOff = function() {
 };
 
 robot.get_distance = function() {
-  var res = '';
-  fetch("/distance").then(function(response) {
-    return response.text();
-  }).then(function(text) {
-    res = text;
-  });
-  return res;
+  // Can't figure out how to get reult back to Blockly using fetch/promises/callbacks
+  // Crappy workaround using synchronous xhr (wtf!) follows
+  AJAX = new XMLHttpRequest();
+  if (AJAX) {
+     AJAX.open("GET", '/distance', false);
+     AJAX.send(null);
+     return AJAX.responseText;
+  }
+  else {
+     return false;
+  }
 };
