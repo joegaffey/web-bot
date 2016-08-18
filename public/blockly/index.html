@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
   <title>Blockly Robot Controller</title>
+
   <script src="./blockly_compressed.js"></script>
   <script src="./blocks_compressed.js"></script>
   <script src="./javascript_compressed.js"></script>
   <script src="./msg/js/en.js"></script>
-  <style>
-    body {
-      background-color: #fff;
-      font-family: sans-serif;
-    }
-    h1 {
-      font-weight: normal;
-      font-size: 140%;
-    }
-  </style>
+
+  <script src="blocks.js"></script>
+  <script src="robot.js"></script>
 </head>
 <body>
 
@@ -25,7 +18,7 @@
     <button onclick="runCode()">Run code</button>
   </p>
 
-  <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+  <div id="blocklyDiv" style="height: 600px; width: 800px;"></div>
 
   <xml id="toolbox" style="display: none">
     <category name="Robot">
@@ -63,229 +56,37 @@
       <block type="math_single"></block>
     </category>
 
-    <category name="Text">
+    <category name="Debug">
       <block type="text_print"></block>
     </category>
   </xml>
 
-  <xml id="startBlocks" style="display: none">
-  </xml>
+  <xml id="startBlocks" style="display: none"></xml>
 
   <script>
 
-     var testRobot = {};
-     testRobot.left = function(time) {
-       alert("left " + time);
-     };
-     testRobot.right = function(time) {
-       alert("right " + time);
-     };
-     testRobot.forward = function(time) {
-       alert("forward " + time);
-     };
-     testRobot.backward = function(time) {
-       alert("backward " + time);
-     };
-     testRobot.stop = function(time) {
-       alert('stop');
-     };
-     testRobot.blink = function(time) {
-       alert("blink " + time);
-     };
-     testRobot.get_distance = function() {
-       return Math.random() * 100;
-     };
+  var toolboxEl = document.getElementById('toolbox');
+  var workspace = Blockly.inject('blocklyDiv', { media: './media/', toolbox: toolboxEl });
+  Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
 
-     var robot = {};
-     robot.left = function(time) {
-       //TBD
-     };
-     robot.right = function(time) {
-       //TBD
-     };
-     robot.forward = function(time) {
-       //TBD
-     };
-     robot.backward = function(time) {
-       //TBD
-     };
-     robot.stop = function(time) {
-       //TBD
-     };
-     robot.blink = function(time) {
-       //TBD
-     };
-     robot.get_distance = function() {
-       return Math.random() * 100; //TBD
-     };
+  function showCode() {
+    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+    var code = Blockly.JavaScript.workspaceToCode(workspace);
+    alert(code);
+  }
 
-     var robot = testRobot;
-
-     ////////////////// start blocks def ///////////////////////////
-
-     // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#46he25
-     Blockly.Blocks['turn_left'] = {
-      init: function() {
-        this.appendDummyInput()
-            .appendField("turn_left");
-        this.appendValueInput("time")
-            .setCheck("Number");
-        this.setInputsInline(true);
-        this.setPreviousStatement(true, null);
-        this.setNextStatement(true, null);
-        this.setColour(210);
-        this.setTooltip('Turn the robot left for specified time in ms');
-      }
-    };
-
-    Blockly.JavaScript['turn_left'] = function(block) {
-      var value_time = Blockly.JavaScript.valueToCode(block, 'time', Blockly.JavaScript.ORDER_ATOMIC);
-      var code = 'robot.left(' + value_time + ');\n';
-      return code;
-    };
-
-    Blockly.Blocks['turn_right'] = {
-     init: function() {
-       this.appendDummyInput()
-           .appendField("turn_right");
-       this.appendValueInput("time")
-           .setCheck("Number");
-       this.setInputsInline(true);
-       this.setPreviousStatement(true, null);
-       this.setNextStatement(true, null);
-       this.setColour(210);
-       this.setTooltip('Turn the robot right for specified time in ms');
-     }
-   };
-
-    Blockly.JavaScript['turn_right'] = function(block) {
-       var value_time = Blockly.JavaScript.valueToCode(block, 'time', Blockly.JavaScript.ORDER_ATOMIC);
-       var code = 'robot.right(' + value_time + ');\n';
-       return code;
-    };
-
-    Blockly.Blocks['forward'] = {
-      init: function() {
-        this.appendDummyInput()
-            .appendField("forward");
-        this.appendValueInput("time")
-            .setCheck("Number");
-        this.setInputsInline(true);
-        this.setPreviousStatement(true, null);
-        this.setNextStatement(true, null);
-        this.setColour(210);
-        this.setTooltip('Move the robot forwards for specified time in ms');
-      }
-    };
-
-    Blockly.JavaScript['forward'] = function(block) {
-      var value_time = Blockly.JavaScript.valueToCode(block, 'time', Blockly.JavaScript.ORDER_ATOMIC);
-      var code = 'robot.forward(' + value_time + ');\n';
-      return code;
-    };
-
-    Blockly.Blocks['backward'] = {
-     init: function() {
-       this.appendDummyInput()
-           .appendField("backward");
-       this.appendValueInput("time")
-           .setCheck("Number");
-       this.setInputsInline(true);
-       this.setPreviousStatement(true, null);
-       this.setNextStatement(true, null);
-       this.setColour(210);
-       this.setTooltip('Move the robot backwards for specified time in ms');
-     }
-   };
-
-   Blockly.JavaScript['backward'] = function(block) {
-     var value_time = Blockly.JavaScript.valueToCode(block, 'time', Blockly.JavaScript.ORDER_ATOMIC);
-     var code = 'robot.backward(' + value_time + ');\n';
-     return code;
-   };
-
-   Blockly.Blocks['stop'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField("stop");
-      this.setInputsInline(true);
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(210);
-      this.setTooltip('Stop the bot!');
+  function runCode() {
+    window.LoopTrap = 1000;
+    Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+    var code = Blockly.JavaScript.workspaceToCode(workspace);
+    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+    try {
+      eval(code);
     }
-  };
-
-  Blockly.JavaScript['stop'] = function(block) {
-    var code = 'robot.stop();\n';
-    return code;
-  };
-
-  Blockly.Blocks['blink'] = {
-   init: function() {
-     this.appendDummyInput()
-         .appendField("blink");
-     this.appendValueInput("time")
-         .setCheck("Number");
-     this.setInputsInline(true);
-     this.setPreviousStatement(true, null);
-     this.setNextStatement(true, null);
-     this.setColour(210);
-     this.setTooltip('Turn on the LED for the specified time in ms');
-   }
-  };
-
-  Blockly.JavaScript['blink'] = function(block) {
-   var value_time = Blockly.JavaScript.valueToCode(block, 'time', Blockly.JavaScript.ORDER_ATOMIC);
-   var code = robot.blink();
-   return code;
-  };
-
-  // https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#ropyyd
-  Blockly.Blocks['get_distance'] = {
-   init: function() {
-     this.appendDummyInput()
-         .appendField("get_distance");
-     this.setInputsInline(true);
-     this.setOutput(true, "Number");
-     this.setColour(210);
-     this.setTooltip('Get the distance to the nearest obstacle in front of the robot in cm');
-   }
-  };
-
-  Blockly.JavaScript['get_distance'] = function(block) {
-   var code = 'robot.get_distance()';
-   return [code, Blockly.JavaScript.ORDER_NONE];
-  };
-
-  ////////////////// end blocks def ///////////////////////////
-
-    var workspace = Blockly.inject('blocklyDiv',
-        {media: './media/',
-         toolbox: document.getElementById('toolbox')});
-    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
-                               workspace);
-
-    function showCode() {
-      // Generate JavaScript code and display it.
-      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-      var code = Blockly.JavaScript.workspaceToCode(workspace);
-      alert(code);
+    catch (e) {
+      alert(e);
     }
-
-    function runCode() {
-      // Generate JavaScript code and run it.
-      window.LoopTrap = 1000;
-      Blockly.JavaScript.INFINITE_LOOP_TRAP =
-          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
-      var code = Blockly.JavaScript.workspaceToCode(workspace);
-      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-      try {
-        eval(code);
-      } catch (e) {
-        alert(e);
-      }
-    }
+  }
   </script>
 
 </body>
