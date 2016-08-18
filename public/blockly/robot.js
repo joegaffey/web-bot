@@ -24,6 +24,14 @@ robot.blink = function(time) {
   fetch("/blink/" + time);
 };
 
+robot.ledOn = function() {
+  fetch("/led-on");
+};
+
+robot.ledOff = function() {
+  fetch("/lid-off");
+};
+
 robot.get_distance = function() {
   return Math.random() * 100; //TBD
 };

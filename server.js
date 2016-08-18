@@ -73,4 +73,16 @@ app.get('/distance', function(req, res) {
   writeMessage(msg);
 });
 
+app.get('/led-on', function(req, res) {
+  console.log('Request to turn on led');
+  var msg = '007#';
+  writeMessage(msg);
+});
+
+app.get('/led-off', function(req, res) {
+  console.log('Request to turn off led');
+  var msg = '008#';
+  writeMessage(msg);
+});
+
 app.listen(8080);

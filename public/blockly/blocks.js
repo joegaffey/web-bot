@@ -132,3 +132,37 @@ Blockly.JavaScript['get_distance'] = function(block) {
   var code = 'robot.get_distance()';
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
+
+Blockly.Blocks['led_on'] = {
+  init: function() {
+    this.appendDummyInput()
+    .appendField("LED on");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(210);
+    this.setTooltip('Turn on the LED');
+  }
+};
+
+Blockly.JavaScript['led_on'] = function(block) {
+  var code = 'robot.ledOn();\n';
+  return code;
+};
+
+Blockly.Blocks['led_off'] = {
+  init: function() {
+    this.appendDummyInput()
+    .appendField("LED off");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(210);
+    this.setTooltip('Turn off the LED');
+  }
+};
+
+Blockly.JavaScript['led_off'] = function(block) {
+  var code = 'robot.ledOff();\n';
+  return code;
+};

@@ -20,6 +20,14 @@ robot.stop = function(time) {
   alert('stop');
 };
 
+robot.ledOn = function(time) {
+  alert('LED on');
+};
+
+robot.ledOff = function(time) {
+  alert('LED off');
+};
+
 robot.blink = function(time) {
   alert("blink " + time);
 };
