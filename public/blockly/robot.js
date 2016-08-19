@@ -1,47 +1,51 @@
 var robot = {};
 
 robot.left = function(time) {
-  fetch("/left/" + time);
+  syncRequest("/left/" + time);
 };
 
 robot.right = function(time) {
-  fetch("/right/" + time);
+  syncRequest("/right/" + time);
 };
 
 robot.forward = function(time) {
-  fetch("/forward/" + time);
+  syncRequest("/forward/" + time);
 };
 
 robot.backward = function(time) {
-  fetch("/backward/" + time);
+  syncRequest("/backward/" + time);
 };
 
 robot.stop = function() {
-  fetch("/stop");
+  syncRequest("/stop");
 };
 
 robot.blink = function(time) {
-  fetch("/blink/" + time);
+  syncRequest("/blink/" + time);
 };
 
 robot.ledOn = function() {
-  fetch("/led-on");
+  syncRequest("/led-on");
 };
 
 robot.ledOff = function() {
-  fetch("/led-off");
+  syncRequest("/led-off");
 };
 
 robot.get_distance = function() {
-  // Can't figure out how to get reult back to Blockly using fetch/promises/callbacks
-  // Crappy workaround using synchronous xhr (wtf!) follows
+  return syncRequest('/distance');
+};
+
+// Can't figure out how to get reult back to Blockly using fetch/promises/callbacks
+// Crappy workaround using synchronous xhr (wtf!) follows
+function syncRequest(url) {
   AJAX = new XMLHttpRequest();
   if (AJAX) {
-     AJAX.open("GET", '/distance', false);
+     AJAX.open("GET", url, false);
      AJAX.send(null);
      return AJAX.responseText;
   }
   else {
      return false;
   }
-};
+}
