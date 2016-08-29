@@ -35,7 +35,7 @@ app.get('/action/:action', function(req, res) {
   res.send();
 });
 
-setInterval(function() {
-  if(sseClient !== null)
-    sseClient.sse('data:' + new Date().getSeconds() + '\n\n');
-}, 1000);
+// setInterval(function() {
+//   if(sseClient !== null)
+//     sseClient.sse('data:' + new Date().getSeconds() + '\n\n');
+// }, 1000);

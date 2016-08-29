@@ -13,13 +13,7 @@ sensors.distance = -1;
 
 var es = new EventSource("/events");
 
-// es.onmessage = function (event) {
-//   console.log(event);
-//   sensors.distance = parseInt(event.data);
-// };
-
 es.addEventListener('message', function(e) {
-  console.log(e.data);
   sensors.distance = parseInt(e.data);
 }, false);
 
