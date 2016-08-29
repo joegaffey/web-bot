@@ -1,51 +1,60 @@
-var robot = {};
+var actions = {};
+actions.stop = 0;
+actions.forward = 1;
+actions.backward = 2;
+actions.right = 3;
+actions.left = 4;
+actions.ledOn = 5;
+actions.ledOff = 6;
+actions.ping = 7;
 
-robot.left = function(time) {
-  syncRequest("/left/" + time);
+var sensors = {};
+sensors.distance = -1;
+
+var es = new EventSource("/events");
+
+// es.onmessage = function (event) {
+//   console.log(event);
+//   sensors.distance = parseInt(event.data);
+// };
+
+es.addEventListener('message', function(e) {
+  console.log(e.data);
+  sensors.distance = parseInt(e.data);
+}, false);
+
+robot_left = function() {
+  fetch('/action/' + actions.left);
 };
 
-robot.right = function(time) {
-  syncRequest("/right/" + time);
+robot_right = function(time) {
+  fetch('/action/' + actions.right);
 };
 
-robot.forward = function(time) {
-  syncRequest("/forward/" + time);
+robot_forward = function(time) {
+  fetch('/action/' + actions.forward);
 };
 
-robot.backward = function(time) {
-  syncRequest("/backward/" + time);
+robot_backward = function(time) {
+  fetch('/action/' + actions.backward);
 };
 
-robot.stop = function() {
-  syncRequest("/stop");
+robot_ledOn = function() {
+  fetch('/action/' + actions.ledOn);
 };
 
-robot.blink = function(time) {
-  syncRequest("/blink/" + time);
+robot_ledOff = function() {
+  fetch('/action/' + actions.ledOff);
 };
 
-robot.ledOn = function() {
-  syncRequest("/led-on");
+robot_stop = function() {
+  fetch('/action/' + actions.stop);
 };
 
-robot.ledOff = function() {
-  syncRequest("/led-off");
+robot_ping = function() {
+  fetch('/action/' + actions.ping);
 };
 
-robot.get_distance = function() {
-  return syncRequest('/distance');
+robot_get_distance = function() {
+  return sensors.distance;
 };
-
-// Can't figure out how to get reult back to Blockly using fetch/promises/callbacks
-// Crappy workaround using synchronous xhr (wtf!) follows
-function syncRequest(url) {
-  AJAX = new XMLHttpRequest();
-  if (AJAX) {
-     AJAX.open("GET", url, false);
-     AJAX.send(null);
-     return AJAX.responseText;
-  }
-  else {
-     return false;
-  }
-}
