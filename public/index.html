@@ -1,26 +1,103 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  </head>
-  <body>
-    <div>Distance: <span id="distance"></span></div>
-    <button onclick="fetch('/action/0')">Stop</button>
-    <button onclick="fetch('/action/1')">Forward</button>
-    <button onclick="fetch('/action/2')">Back</button>
-    <button onclick="fetch('/action/3')">Right</button>
-    <button onclick="fetch('/action/4')">Left</button>
-    <button onclick="fetch('/action/5')">Led On</button>
-    <button onclick="fetch('/action/6')">Led Off</button>
-    <button onclick="fetch('/action/7')">Ping</button>
-    <script>
+<head>
+</head>
+<body>
+<div>Distance: <span id="distance"></span></div>
+<button onclick="stop()">Stop</button>
+<button onclick="forward()">Forward</button>
+<button onclick="back()">Back</button>
+<button onclick="right()">Right</button>
+<button onclick="left()">Left</button>
+<button onclick="ledOn()">Led On</button>
+<button onclick="ledOff()">Led Off</button>
+<button onclick="ping()">Ping</button>
+<script>
 
-      var distanceEl = document.getElementById('distance');
-      var es = new EventSource('/events');
+var distanceEl = document.getElementById('distance');
+var es = new EventSource('/events');
 
-      es.addEventListener('message', function(e) {
-        distanceEl.textContent = e.data;
-      }, false);
+es.addEventListener('message', function(e) {
+  distanceEl.textContent = e.data;
+}, false);
 
-    </script>
-  </body>
+document.addEventListener('keydown', (event) => {
+  if(event.keyCode > 36 && event.keyCode < 41) {
+    arrowDown(event.keyCode);
+  }
+  else wasd(event.key);
+}, false);
+
+function arrowDown(keyCode) {
+  switch(keyCode) {
+    case 38:
+      forward();
+      break;
+    case 40:
+      back();
+      break;
+    case 37:
+      left();
+      break;
+    case 39:
+      right();
+      break;
+    default:
+      stop();
+  }
+}
+
+function wasd(key) {
+  switch(key) {
+    case 'w':
+      forward();
+      break;
+    case 's':
+      back();
+      break;
+    case 'a':
+      left();
+      break;
+    case 'd':
+      right();
+      break;
+    default:
+      stop();
+  }
+}
+
+function stop() {
+  fetch('/action/0');
+}
+
+function forward() {
+  fetch('/action/1');
+}
+
+function back() {
+  fetch('/action/2');
+}
+
+function left() {
+  fetch('/action/4');
+}
+
+function right() {
+  fetch('/action/3');
+}
+
+function ledOn() {
+  fetch('/action/5');
+}
+
+function ledOff() {
+  fetch('/action/6');
+}
+
+function ping() {
+  fetch('/action/7');
+}
+
+</script>
+</body>
 </html>
